@@ -11,8 +11,7 @@ function Login() {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormName(event.target.value);
   };
-  const handleClick = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleClick = async () => {
     setToggleloading(!toggleloading);
     await createUser({ name: formName });
     navigate('/search');
@@ -34,9 +33,7 @@ function Login() {
           name="name"
           id="name"
           data-testid="login-name-input"
-          onChange={ (event) => {
-            handleChange(event);
-          } }
+          onChange={ (event) => { handleChange(event); } }
           value={ formName }
         />
         <button
