@@ -1,18 +1,29 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Loading from './Loading';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
+import { AlbumType } from '../types';
+import Album from './Album';
 
 function Search() {
   const [formArtist, setFormArtist] = useState('');
   const [toggleloading, setToggleloading] = useState(false);
+  const [albunsList, setAlbunsList] = useState<AlbumType[]>([]);
+  const [validArtist, setValidArtist] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormArtist(event.target.value);
   };
-  const handleClick = async (/* event: React.FormEvent<HTMLFormElement> */) => {
-    // event.preventDefault();
-    setToggleloading(!toggleloading);
-    await searchAlbumsAPI(formArtist);
+  const handleClick = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setToggleloading((prevState) => !prevState);
+    const albuns = await searchAlbumsAPI(formArtist);
+    if (albuns) {
+      setAlbunsList(albuns);
+      setValidArtist(formArtist);
+      setFormArtist('');
+      setToggleloading((prevState) => !prevState);
+    }
   };
 
   if (toggleloading) {
@@ -43,6 +54,26 @@ function Search() {
           Pesquisar
         </button>
       </form>
+      {validArtist && (<p>{`Resultado de álbuns de: ${validArtist}`}</p>)}
+      <ul>
+        {albunsList.length === 0
+          ? <p>Nenhum álbum foi encontrado</p>
+          : albunsList.map((album) => (
+
+            <li key={ album.collectionId }>
+              <Link
+                to={ `/album/${album.collectionId}` }
+                data-testid={ `link-to-album-${album.collectionId}` }
+              >
+                <p>{album.collectionName}</p>
+                <img
+                  src={ album.artworkUrl100 }
+                  alt={ `${album.artistName} - ${album.collectionName}` }
+                />
+              </Link>
+            </li>
+          ))}
+      </ul>
     </>
   );
 }
