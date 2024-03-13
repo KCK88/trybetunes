@@ -13,8 +13,9 @@ function Album() {
   useEffect(() => {
     getMusics(id as string).then((data) => {
       setAlbumMetadata(() => data[0]);
-      data.shift();
-      setAlbumSongs(() => data as Array<SongType>);
+      // data.shift();
+      const [album, ...tracks] = data;
+      setAlbumSongs(tracks as Array<SongType>);
       setToggleloading((prevState) => !prevState);
     });
   }, [id]);
@@ -29,9 +30,7 @@ function Album() {
       <p data-testid="artist-name">{albumMetadata?.artistName}</p>
       <p data-testid="album-name">{albumMetadata?.collectionName}</p>
       {
-        albumSongs.length === 0
-          ? <p>Não tem nada carai</p>
-          : albumSongs.map((song) => (
+          albumSongs.map((song) => (
             <MusicCard
               key={ song.trackId }
               previewUrl={ song.previewUrl }

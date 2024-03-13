@@ -4,7 +4,6 @@ type MusicProps = {
   trackName: string
 };
 function MusicCard({ key, previewUrl, trackName }: MusicProps) {
-  console.log(previewUrl);
   return (
     <div key={ key }>
       <p>{ trackName }</p>
