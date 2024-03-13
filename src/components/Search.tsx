@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Loading from './Loading';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import { AlbumType } from '../types';
-import Album from './Album';
 
 function Search() {
   const [formArtist, setFormArtist] = useState('');
