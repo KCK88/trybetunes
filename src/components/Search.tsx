@@ -58,7 +58,6 @@ function Search() {
         {albunsList.length === 0
           ? <p>Nenhum álbum foi encontrado</p>
           : albunsList.map((album) => (
-
             <li key={ album.collectionId }>
               <Link
                 to={ `/album/${album.collectionId}` }
