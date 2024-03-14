@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Loading from './Loading';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import { AlbumType } from '../types';
+import Header from './Header';
 
 function Search() {
   const [formArtist, setFormArtist] = useState('');
@@ -31,7 +32,7 @@ function Search() {
 
   return (
     <>
-      <h1>Search</h1>
+      <Header />
       <form
         onSubmit={ handleClick }
       >
